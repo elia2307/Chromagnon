@@ -44,9 +44,9 @@ def parse(filename, urlLength):
     # Connecting to the DB
     try:
         history = sqlite3.connect(filename)
-    except sqlite3.Error, error:
-        print "==> Error while opening the history file !"
-        print "==> Details :", error.message
+    except sqlite3.Error as error:
+        print( "==> Error while opening the history file !")
+        print( "==> Details :", error)
         sys.exit("==> Exiting...")
 
     # Retrieving all useful data

@@ -115,7 +115,7 @@ class CacheData():
         Display the type of cacheData
         """
         if self.type == CacheData.HTTP_HEADER:
-            if self.headers.has_key('content-type'):
+            if "content-type" in self.headers:
                 return "HTTP Header %s" % self.headers['content-type']
             else:
                 return "HTTP Header"
