@@ -32,7 +32,7 @@ This module parses SNSS session commands used to store session states in chrome
 
 import datetime
 import struct
-import StringIO
+from io import StringIO, BytesIO
 import sys
 
 import chromagnon.pickle as pickle
@@ -52,6 +52,37 @@ TYPE_DICT = {'0': "CommandSetTabWindow",
              '13': "CommandSetExtensionAppID",
              '14': "CommandSetWindowBounds3"}
 
+def execute_type_dict_id(id, content):
+    match id:
+            case 0:
+                return CommandSetTabWindow(content)
+            case 2:
+                return CommandSetTabIndexInWindow(content)
+            case 3:
+                return CommandTabClosed(content)
+            case 4:
+                return CommandWindowClosed(content)
+            case 5:
+                return CommandTabNavigationPathPrunedFromBack(content)
+            case 6:
+                return CommandUpdateTabNavigation(content)
+            case 7:
+                return CommandSetSelectedNavigationIndex(content)
+            case 8:
+                return CommandSetSelectedTabInIndex(content)
+            case 9:
+                return CommandSetWindowType(content)
+            case 11:
+                return CommandSetPinnedState(content)
+            case 12:
+                return CommandSetPinnedState(content)
+            case 13:
+                return CommandSetExtensionAppID(content)
+            case 14:
+                return CommandSetWindowBounds3(content)
+                
+
+
 def parse(commandList):
     """
     Given a list of SNSS command, it returns a list of SessionCommand
@@ -59,11 +90,9 @@ def parse(commandList):
     output = []
 
     for command in commandList:
-        if TYPE_DICT.has_key(str(command.idType)):
-            content = StringIO.StringIO(command.content)
-            commandClass = sys.modules[__name__].__dict__.get(\
-                           TYPE_DICT[str(command.idType)])
-            output.append(commandClass(content))
+        if str(command.idType) in TYPE_DICT:
+            content= BytesIO(command.content)
+            output.append(execute_type_dict_id(command.idType,content))
     return output
 
 class CommandSetTabWindow():

@@ -33,7 +33,8 @@ Reverse engineered from chrome/browser/sessions/*
 import os
 import struct
 
-import types
+#import types
+import chromagnon.types as types
 
 SNSS_MAGIC = 0x53534E53
 
