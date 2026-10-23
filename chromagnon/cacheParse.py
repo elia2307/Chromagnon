@@ -91,8 +91,8 @@ def parse(path, urls=None):
             addr = struct.unpack('I', index.read(4))[0]
             # Checking if the address is initialized (i.e. used)
             if addr & 0x80000000 == 0:
-                print >> sys.stderr, \
-                      "\033[32m%s\033[31m is not in the cache\033[0m" % url
+                print (\
+                      "\033[32m%s\033[31m is not in the cache\033[0m" % url)
 
             # Follow the chained list in the bucket
             else:

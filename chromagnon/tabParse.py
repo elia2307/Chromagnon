@@ -32,7 +32,7 @@ This module parses SNSS tab commands used to store session states in chrome
 
 import datetime
 import struct
-import StringIO
+from io import StringIO
 import sys
 
 import chromagnon.pickle as pickle
